@@ -1,6 +1,7 @@
-# models/store.py
-# Note: You'll need to import Item from the same directory here.
+# store.py
 from .item import Item
+import mysql.connector
+
 
 
 class Store:
@@ -9,7 +10,17 @@ class Store:
     """
 
     def __init__(self):
-        # Initialize inventory with Item objects
+        # Initialize inventory with DB
+        try:
+            mydb = mysql.connector.connect(
+                host="localhost",
+                user="root",
+                password="b3e5fdf68",
+                database="store"
+            )
+        except mysql.connector.Error as err:
+            print(f"Error connecting to MySQL: {err}")
+            exit()
         self.inventory = {
             'apple': Item('apple', 20.00, 50),
             'banana': Item('banana', 5.00, 100),
